@@ -1,0 +1,25 @@
+{
+    "name": "olliebrennan/zf2-slug-generator",
+    "description": "A Slug Generation Library",
+    "keywords": ["slug", "zend-framework", "zf2"],
+    "homepage": "olliebrennan/Zf2SlugGenerator",
+    "type": "library",
+    "license": "The MIT License",
+    "authors": [
+        {
+            "name": "Ollie Brennan",
+            "email": "github@epicarena.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3"
+    },
+    "autoload": {
+        "psr-0": {
+            "Zf2SlugGenerator": "src/"
+        },
+        "classmap": [
+            "./Module.php"
+        ]
+    }
+}
