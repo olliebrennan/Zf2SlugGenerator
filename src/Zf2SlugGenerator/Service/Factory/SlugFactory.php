@@ -19,8 +19,13 @@ class SlugFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
+        $mapper = $serviceLocator->get('Zf2SlugGenerator\Mapper\DbTable');
+        $mapper->setDbAdapter($serviceLocator->get('Zend\Db\Adapter\Adapter'));
+        $mapper->setEntityPrototype($serviceLocator->get('Zf2SlugGenerator\Entity\Result'));
+
         $service = new \Zf2SlugGenerator\Service\Slug();
-        $service->setServiceManager($serviceLocator);
+        $service->setServiceManager($serviceLocator)
+            ->setMapper($mapper);
         return $service;
     }
 }
