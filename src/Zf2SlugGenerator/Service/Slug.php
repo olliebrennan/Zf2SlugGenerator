@@ -29,11 +29,25 @@ class Slug extends EventProvider implements ServiceManagerAwareInterface
      */
     public function create($string)
     {
+        $origString = $string;
+        $count = 0;
+
+        while ($this->getMapper()->slugExists($slug = $this->slugify($string))) {
+            if ($count > 100) {
+                throw new SlugException('Iteration loop reached. Unable to continue');
+            }
+            $string = $origString . ' ' . $count++;
+        }
+
+        return $slug;
+    }
+
+    protected function slugify($string)
+    {
         $slug = trim($string); // trim the string
         $slug = preg_replace('/[^a-zA-Z0-9 -]/', '', $slug); // only take alphanumerical characters, but keep the spaces and dashes too...
         $slug = str_replace(' ', '-', $slug); // replace spaces by dashes
         $slug = strtolower($slug);  // make it lowercase
-        $this->getMapper()->slugExists($slug);
         return $slug;
     }
 
