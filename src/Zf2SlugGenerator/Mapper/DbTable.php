@@ -21,6 +21,7 @@ class DbTable extends AbstractDbMapper
      *
      * @param string $slug
      * @return boolean
+     * @throws Zf2SlugGenerator\Exception\DbTableException
      */
     public function slugExists($slug)
     {
@@ -58,17 +59,21 @@ class DbTable extends AbstractDbMapper
 
     /**
      * @param string $tableName
+     * @return Zf2SlugGenerator\Mapper\DbTable
      */
     public function setTableName($tableName)
     {
         $this->tableName = $tableName;
+        return $this;
     }
 
     /**
      * @param string $colName
+     * @return Zf2SlugGenerator\Mapper\DbTable
      */
     public function setColName($colName)
     {
         $this->colName = $colName;
+        return $this;
     }
 }
