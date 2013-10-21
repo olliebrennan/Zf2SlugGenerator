@@ -7,13 +7,15 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Class SlugFactory
- * Use a factory to allow the opcode cache to do its magick
+ * Use a factory to allow the opcode cache to do it's magick
  *
  * @package Zf2SlugGenerator\Service\Factory
  */
 class SlugFactory implements FactoryInterface
 {
     /**
+     * Create the service
+     *
      * @param ServiceLocatorInterface $serviceLocator
      * @return Zf2SlugGenerator\Service\Slug
      */

@@ -19,16 +19,19 @@ class Slug extends EventProvider implements ServiceManagerAwareInterface
      */
     protected $serviceManager;
 
-    protected $dbExclusion;
-
     /**
      * Create slug from string
      *
      * @param string $string
+     * @param boolean [$useDataSource] - Check datasource or keep it simple
      * @return string
      */
-    public function create($string)
+    public function create($string, $useDataSource = true)
     {
+        if (! $useDataSource) {
+            return $this->slugify($string);
+        }
+        
         $origString = $string;
         $count = 0;
 
@@ -65,7 +68,7 @@ class Slug extends EventProvider implements ServiceManagerAwareInterface
 
     public function setDbExclusion($string)
     {
-        $dbExclusion = $string;
+        $this->getMapper()->setExclusionString($string);
         return $this;
     }
 

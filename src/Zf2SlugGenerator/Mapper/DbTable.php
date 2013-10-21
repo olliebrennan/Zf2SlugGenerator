@@ -15,8 +15,13 @@ class DbTable extends AbstractDbMapper
      * @var $colName
      */
     protected $colName;
-
+    
     /**
+     * @var $exclusionString
+     */
+    protected $exclusionString;
+
+	/**
      * Checks if a slug exists in the DB already
      *
      * @param string $slug
@@ -74,6 +79,23 @@ class DbTable extends AbstractDbMapper
     public function setColName($colName)
     {
         $this->colName = $colName;
+        return $this;
+    }
+
+    /**
+     * @return string $exclusionString
+     */
+    public function getExclusionString()
+    {
+        return $this->exclusionString;
+    }
+
+	/**
+     * @param \Zf2SlugGenerator\Mapper\unknown $exclusionString
+     */
+    public function setExclusionString($exclusionString)
+    {
+        $this->exclusionString = $exclusionString;
         return $this;
     }
 }
