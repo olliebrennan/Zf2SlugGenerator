@@ -1,10 +1,9 @@
 {
     "name": "olliebrennan/zf2-slug-generator",
-    "description": "A Slug Generation Library",
+    "description": "A ZF2 Slug Generation Library. Allows basic slug generation or integration with your DB",
     "keywords": ["slug", "zend-framework", "zf2"],
     "homepage": "https://github.com/olliebrennan/Zf2SlugGenerator",
     "type": "library",
-    "license": "The MIT License",
     "authors": [
         {
             "name": "Ollie Brennan",
