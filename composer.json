@@ -1,5 +1,5 @@
 {
-    "name": "olliebrennan/Zf2SlugGenerator",
+    "name": "olliebrennan/zf2-slug-generator",
     "description": "A Slug Generation Library",
     "keywords": ["slug", "zend-framework", "zf2"],
     "homepage": "olliebrennan/Zf2SlugGenerator",
@@ -17,7 +17,7 @@
     },
     "autoload": {
         "psr-0": {
-            "Zf2SlugGenerator": "src/"
+            "zf2-slug-generator": "src/"
         },
         "classmap": [
             "./Module.php"
