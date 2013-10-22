@@ -24,5 +24,4 @@ class Result
     {
         $this->count = (int)$count;
     }
-
 }
