@@ -2,7 +2,7 @@
     "name": "olliebrennan/zf2-slug-generator",
     "description": "A Slug Generation Library",
     "keywords": ["slug", "zend-framework", "zf2"],
-    "homepage": "olliebrennan/Zf2SlugGenerator",
+    "homepage": "https://github.com/olliebrennan/Zf2SlugGenerator",
     "type": "library",
     "license": "The MIT License",
     "authors": [
