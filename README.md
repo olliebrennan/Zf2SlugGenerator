@@ -1,4 +1,5 @@
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/olliebrennan/Zf2SlugGenerator/badges/quality-score.png?s=653d247434c5bd09c553f9a41340cc5dc23517de)](https://scrutinizer-ci.com/g/olliebrennan/Zf2SlugGenerator/)
+[![Build Status](https://travis-ci.org/olliebrennan/Zf2SlugGenerator.png?branch=master)](https://travis-ci.org/olliebrennan/Zf2SlugGenerator)
 
 Zf2SlugGenerator
 ====================
