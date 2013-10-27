@@ -4,13 +4,12 @@ namespace Zf2SlugGenerator\Service;
 
 use Zend\ServiceManager\ServiceManagerAwareInterface;
 use Zend\ServiceManager\ServiceManager;
-use ZfcBase\EventManager\EventProvider;
 use \Zf2SlugGenerator\Exception\SlugException as SlugException;
 
-class Slug extends EventProvider implements ServiceManagerAwareInterface
+class Slug implements ServiceManagerAwareInterface
 {
     /**
-     * @var DB Mapper
+     * @var $mapper
      */
     protected $mapper;
 
@@ -23,7 +22,8 @@ class Slug extends EventProvider implements ServiceManagerAwareInterface
      * Create slug from string
      *
      * @param string $string
-     * @param boolean [$useDataSource] - Check datasource or keep it simple
+     * @param bool $useDataSource [$useDataSource] - Check data-source or keep it simple
+     * @throws \Zf2SlugGenerator\Exception\SlugException
      * @return string
      */
     public function create($string, $useDataSource = true)

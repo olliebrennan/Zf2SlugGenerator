@@ -68,22 +68,6 @@ class DbTableTest extends \PHPUnit_Framework_TestCase
             instanceof DbTable);
     }
     
-    public function testEmptyGetColName()
-    {
-        $this->assertEquals(
-            null,
-            $this->resultObj->getColName()
-        );
-    }
-    
-    public function testEmptyGetTableName()
-    {
-        $this->assertEquals(
-            null,
-            $this->resultObj->getTableName()
-        );
-    }
-    
     public function testEmptyGetExclusionString()
     {
         $this->assertEquals(
@@ -119,32 +103,40 @@ class DbTableTest extends \PHPUnit_Framework_TestCase
         );
     }
     
-    public function testSlugExistsFailsOnEmptyTableName()
+    public function testGetTableNameFailsOnEmptyTableName()
     {
         $this->setExpectedException(
-            'Zf2SlugGenerator\Mapper\Exception\DbTableException', 'Missing DBTable validation data'
+            'Zf2SlugGenerator\Mapper\Exception\SlugDbException', 'Missing DBTable validation data'
         );
-        
-        $this->resultObj->setColName('someColName');
-        $this->resultObj->slugExists('sluggy');
+
+        $this->resultObj->getTableName();
     }
-    
-    public function testSlugExistsFailsOnEmptyColName()
+
+    public function testGetColNameFailsOnEmptyColName()
     {
         $this->setExpectedException(
-            'Zf2SlugGenerator\Mapper\Exception\DbTableException', 'Missing DBTable validation data'
+            'Zf2SlugGenerator\Mapper\Exception\SlugDbException', 'Missing DBTable validation data'
         );
-        
-        $this->resultObj->setTableName('someTableName');
-        $this->resultObj->slugExists('sluggy');
+
+        $this->resultObj->getColName();
     }
-    
-    public function testSlugExistsFailsOnEmptyColNameAndEmptyTableName()
+
+    public function testGetDbAdapterFailsOnEmptyDbAdapter()
     {
         $this->setExpectedException(
-            'Zf2SlugGenerator\Mapper\Exception\DbTableException', 'Missing DBTable validation data'
+            'Zf2SlugGenerator\Mapper\Exception\SlugDbException', 'No db adapter present'
         );
-        
-        $this->resultObj->slugExists('sluggy');
+
+        $this->resultObj->getDbAdapter();
+    }
+
+    public function testGetDbAdapter()
+    {
+        $mock = $this->getMockBuilder('\Zend\Db\Adapter\Adapter')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->resultObj->setDbAdapter($mock);
+        $this->assertInstanceOf('\Zend\Db\Adapter\Adapter', $this->resultObj->getDbAdapter());
     }
 }

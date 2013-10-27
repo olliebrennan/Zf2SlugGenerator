@@ -65,6 +65,9 @@ class Bootstrap
         }
 
         $zf2Path = getenv('ZF2_PATH') ?: (defined('ZF2_PATH') ? ZF2_PATH : (is_dir($vendorPath . '/ZF2/library') ? $vendorPath . '/ZF2/library' : false));
+        if (! $zf2Path) {
+            $zf2Path = (is_dir('./zf2/library') ? './zf2/library' : false);
+        }
 
         if (!$zf2Path) {
             throw new RuntimeException('Unable to load ZF2. Run `php composer.phar install` or define a ZF2_PATH environment variable.');

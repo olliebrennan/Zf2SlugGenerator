@@ -4,6 +4,7 @@ namespace Zf2SlugGenerator\Service\Factory;
 
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use \Zf2SlugGenerator\Service\Slug;
 
 /**
  * Class SlugFactory
@@ -22,10 +23,11 @@ class SlugFactory implements FactoryInterface
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $mapper = $serviceLocator->get('Zf2SlugGenerator\Mapper\DbTable');
-        $mapper->setDbAdapter($serviceLocator->get('Zend\Db\Adapter\Adapter'));
-        $mapper->setEntityPrototype($serviceLocator->get('Zf2SlugGenerator\Entity\Result'));
+        if ($serviceLocator->has('Zend\Db\Adapter\Adapter')) {
+            $mapper->setDbAdapter($serviceLocator->get('Zend\Db\Adapter\Adapter'));
+        }
 
-        $service = new \Zf2SlugGenerator\Service\Slug();
+        $service = new Slug();
         $service->setServiceManager($serviceLocator)
             ->setMapper($mapper);
         return $service;

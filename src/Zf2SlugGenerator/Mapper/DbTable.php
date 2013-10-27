@@ -1,10 +1,10 @@
 <?php
 namespace Zf2SlugGenerator\Mapper;
 
-use ZfcBase\Mapper\AbstractDbMapper;
-use Zf2SlugGenerator\Mapper\Exception\DbTableException;
+use Zf2SlugGenerator\Mapper\Exception\SlugDbException as SlugDbException;
+use Zend\Db\Sql\Sql;
 
-class DbTable extends AbstractDbMapper
+class DbTable
 {
     /**
      * @var $tableName
@@ -21,44 +21,62 @@ class DbTable extends AbstractDbMapper
      */
     protected $exclusionString;
 
+    /**
+     * @var $dbAdapter
+     */
+    protected $dbAdapter;
+
 	/**
      * Checks if a slug exists in the DB already
      *
      * @param string $slug
      * @return boolean
-     * @throws Zf2SlugGenerator\Exception\DbTableException
      */
     public function slugExists($slug)
     {
         $table = $this->getTableName();
         $column = $this->getColName();
+        $adapter = $this->getDbAdapter();
 
-        if (empty($table) || empty($column)) {
-            throw new DbTableException('Missing DBTable validation data');
+        $sql = new Sql($adapter);
+        $select = $sql->select()
+            ->from($table)
+            ->columns(array('count' => new \Zend\Db\Sql\Expression('COUNT(*)')));
+        $select->where(array($column => (string) $slug));
+
+        if ($this->getExclusionString()) {
+            $select->where($column . ' != ?', (string) $this->getExclusionString());
         }
 
-        $select = $this->getSelect($table);
-        $select
-            ->columns(array('count' => new \Zend\Db\Sql\Expression('COUNT(*)')))
-            ->where(array($column => (string) $slug));
+        $statement = $sql->prepareStatementForSqlObject($select);
+        $result = $statement->execute()->current();
 
-        $entity = $this->select($select)->current();
-        return (boolean)$entity->getCount();
+        return (boolean) $result['count'];
     }
 
     /**
+     * @throws SlugDbException
      * @return string
      */
     public function getTableName()
     {
+        if (empty($this->tableName)) {
+            throw new SlugDbException('Missing DBTable validation data');
+        }
+
         return $this->tableName;
     }
 
     /**
+     * @throws SlugDbException
      * @return string
      */
     public function getColName()
     {
+        if (empty($this->colName)) {
+            throw new SlugDbException('Missing DBTable validation data');
+        }
+
         return $this->colName;
     }
 
@@ -90,12 +108,34 @@ class DbTable extends AbstractDbMapper
         return $this->exclusionString;
     }
 
-	/**
-     * @param \Zf2SlugGenerator\Mapper\unknown $exclusionString
+    /**
+     * @param string $exclusionString
+     * @return $this
      */
     public function setExclusionString($exclusionString)
     {
         $this->exclusionString = $exclusionString;
         return $this;
+    }
+
+    /**
+     * @param \Zend\Db\Adapter\Adapter $dbAdapter
+     */
+    public function setDbAdapter(\Zend\Db\Adapter\Adapter $dbAdapter)
+    {
+        $this->dbAdapter = $dbAdapter;
+    }
+
+    /**
+     * @throws Exception\SlugDbException
+     * @return \Zend\Db\Adapter
+     */
+    public function getDbAdapter()
+    {
+        if (! $this->dbAdapter) {
+            throw new SlugDbException('No db adapter present');
+        }
+
+        return $this->dbAdapter;
     }
 }
